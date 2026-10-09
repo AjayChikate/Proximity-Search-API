@@ -61,11 +61,6 @@ g++ -O2 -std=c++17 -o api api.cpp
 setsid ./api 5300 > api.log 2>&1 < /dev/null &
 ```
 
-### 3. Stop / Terminate
-
-```bash
-fuser -k 5300/tcp 2>/dev/null || kill $(lsof -ti:5300)
-```
 
 ---
 
@@ -83,7 +78,7 @@ curl -X POST "http://10.1.75.51:5300/search/" \
 ```
 
 
-## 🧪 Testing & Validation
+##  Testing & Validation
 
 A test script is included to compare API responses against ground-truth BFS results computed locally.
 
