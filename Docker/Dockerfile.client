@@ -1,0 +1,16 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir requests
+
+COPY Docker/test_client.py /app/test_client.py
+COPY locations.csv /app/locations.csv
+COPY link.txt /app/link.txt
+
+ENV API_URL=http://api:5000
+ENV LINK_FILE=link.txt
+ENV CSV_FILE=locations.csv
+
+CMD ["python", "test_client.py"]
+

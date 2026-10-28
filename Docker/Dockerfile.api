@@ -1,0 +1,16 @@
+FROM gcc:12-bullseye AS builder
+WORKDIR /src
+COPY api.cpp .
+RUN g++ -O2 -std=c++17 -static-libstdc++ -static-libgcc -o api api.cpp
+
+FROM debian:bullseye-slim
+WORKDIR /app
+
+COPY --from=builder /src/api /app/api
+COPY locations.csv /app/locations.csv
+
+ENV PORT=5000
+EXPOSE 5000
+
+CMD ["/app/api"]
+

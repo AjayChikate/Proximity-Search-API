@@ -115,3 +115,19 @@ Overall Accuracy: 100/100 (100.00%)
 ├── tests            # Automated test suite and accuracy evaluator
 └── README.md        # Documentation and API reference
 ```
+
+---
+
+## Lab 9: Docker Containerisation
+
+Containerised the full stack (C++ API engine and automated test client) using multi-stage Docker builds and Docker Compose so the entire system builds, networks, and runs with a single command.
+
+### Setup & Run Instructions
+
+```bash
+# build and run the full stack
+docker compose up --build
+
+# stop and remove containers
+docker compose down -v
+```

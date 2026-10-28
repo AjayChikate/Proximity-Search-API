@@ -1,0 +1,35 @@
+services:
+  # C++ proximity search API backend
+  api:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile.api
+    container_name: proximity_api
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - LOCATIONS_CSV=locations.csv
+    networks:
+      - proximity_net
+    restart: unless-stopped
+
+  # automated Python test client
+  client:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile.client
+    container_name: proximity_tester
+    environment:
+      - API_URL=http://api:5000
+      - LINK_FILE=link.txt
+      - CSV_FILE=locations.csv
+    depends_on:
+      - api
+    networks:
+      - proximity_net
+
+networks:
+  proximity_net:
+    driver: bridge
+

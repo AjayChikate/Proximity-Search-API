@@ -305,9 +305,14 @@ int main(int argc, char* argv[]) {
 
     signal(SIGPIPE, SIG_IGN);
 
-    int port = (argc > 1) ? stoi(argv[1]) : 5000;
+    // check env var first, then cli arg, fallback to 5000
+    const char* env_port = getenv("PORT");
+    int port = env_port ? stoi(env_port) : ((argc > 1) ? stoi(argv[1]) : 5000);
 
-    load_csv("locations.csv");
+    const char* env_csv = getenv("LOCATIONS_CSV");
+    string csv_path = env_csv ? env_csv : "locations.csv";
+
+    load_csv(csv_path);
 
     int server_fd = socket(AF_INET, SOCK_STREAM, 0);
 
